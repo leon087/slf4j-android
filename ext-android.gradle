@@ -1,0 +1,98 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url RELEASE_REPOSITORY_URL
+            credentials {
+                username NEXUS_USERNAME
+                password NEXUS_PASSWORD
+            }
+        }
+        maven { url uri(new File(rootDir, 'local_repo')) }
+        mavenLocal()
+    }
+//    ext {
+//        cmGradleVersion = "local.local"
+//    }
+
+    dependencies {
+        classpath "ggg.android:cm.android.gradle:$cmGradleVersion"
+    }
+}
+
+if (plugins.hasPlugin('com.android.library')) {
+    if (project.hasProperty("version_prefix")) {
+        version = cm.android.gradle.util.Util.version(project.version_prefix, project.version_code)
+        android {
+            defaultConfig {
+                archivesBaseName += ("-" + project.version_prefix + "." + project.version_code + "." + cm.android.gradle.util.Util.buildTime())
+            }
+        }
+    }
+}
+
+if (plugins.hasPlugin('com.android.application') || plugins.hasPlugin('com.android.library')) {
+    android {
+        compileSdkVersion rootProject.ext.compileSdkVersion
+        buildToolsVersion rootProject.ext.buildToolsVersion
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_7
+            targetCompatibility JavaVersion.VERSION_1_7
+        }
+
+        defaultConfig {
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+        }
+    }
+
+    android {
+
+        testOptions {
+            unitTests.returnDefaultValues = true
+        }
+
+        aaptOptions {
+//            noCompress 'foo', 'bar'
+            ignoreAssetsPattern "!.svn:!.git:!.ds_store:!*.scc:.*:<dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"
+        }
+
+        packagingOptions.excludes = [
+                '**/LICENSE.txt',
+                '**/license.txt',
+                '**/DEPENDENCIES.txt',
+                '**/NOTICE.txt',
+                '**/NOTICE',
+                '**/notice.txt',
+                '**/ASL2.0',
+                '**/RELEASE_NOTES.txt',
+
+                'LICENSE',
+                'LICENSE.txt',
+                'META-INF/LICENSE',
+                'META-INF/LICENSE.txt',
+                'META-INF/NOTICE',
+                'META-INF/NOTICE.txt',
+                '.readme'
+        ]
+
+//        lintOptions {
+//            abortOnError false
+//            quiet false
+//            showAll true
+//            xmlReport true
+//            htmlReport true
+//            lintConfig file("${project.rootDir}/config/lint/lint.xml")
+//
+//            xmlOutput file("lint/lint-report.xml")
+//            htmlOutput file("lint/lint-report.html")
+//        }
+
+        dexOptions {
+            preDexLibraries = false
+            incremental true
+            javaMaxHeapSize "2g"
+        }
+    }
+}

@@ -1,0 +1,17 @@
+tasks.withType(JavaCompile) { options.encoding = "UTF-8" }
+
+apply plugin: 'com.android.library'
+apply from: "$rootDir/ext-android.gradle"
+
+android {
+    defaultConfig {
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile "org.slf4j:slf4j-api:1.7.22"
+    compile 'com.jakewharton.timber:timber:4.4.0'
+}
