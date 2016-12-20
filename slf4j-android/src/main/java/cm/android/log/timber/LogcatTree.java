@@ -7,7 +7,7 @@ public class LogcatTree extends AbstractTree {
 
     @Override
     protected void log(int priority, String tag, String message, Throwable t) {
-        message = Formatter.formatTag(tag) + " - " + message;
+        message = Formatter.formatTag(tag, Formatter.CALL_STACK_INDEX) + " - " + message;
 //        android.util.Log.e("hhhh", "hhhh LogcatTree priority = " + priority);
 
         if (message.length() < MAX_LOG_LENGTH) {

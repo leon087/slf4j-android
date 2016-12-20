@@ -5,7 +5,6 @@ apply from: "$rootDir/ext-android.gradle"
 
 android {
     defaultConfig {
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 }
 

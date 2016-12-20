@@ -53,6 +53,14 @@ public class MainActivity extends Activity {
                 LogManager.shutdown();
             }
         });
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                android.util.Log.e("hhh", "hhh### test");
+                logger.error("hhh############################## test");
+            }
+        }).start();
     }
 
     @Override

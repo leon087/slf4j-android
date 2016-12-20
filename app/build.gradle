@@ -14,15 +14,20 @@ android {
         }
     }
 
-    defaultConfig {
-        multiDexEnabled true
-
-        testInstrumentationRunner 'com.android.test.runner.MultiDexTestRunner'
-    }
-
     buildTypes {
         release {
-            minifyEnabled false
+            signingConfig signingConfigs.debug
+
+            shrinkResources true
+            zipAlignEnabled true
+
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                    new File(project(':slf4j-android').getProjectDir(), 'proguard-rules.pro'),
+                    new File('proguard-rules.pro')
+        }
+
+        debug {
         }
     }
 

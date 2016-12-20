@@ -1,6 +1,7 @@
 package cm.android.log;
 
 import java.io.BufferedOutputStream;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -9,7 +10,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
-public class FileHandler {
+public class FileHandler implements Closeable {
     private OutputStream os;
     private Writer writer;
     private boolean writerInitialized;
@@ -49,6 +50,7 @@ public class FileHandler {
         }
     }
 
+    @Override
     public synchronized final void close() {
         if (this.os != null) {
             flush();

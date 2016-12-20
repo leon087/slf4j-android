@@ -1,10 +1,10 @@
 package cm.android.log;
 
+import java.io.Closeable;
 import java.util.Iterator;
 import java.util.List;
 
 import cm.android.log.slf4j.TimberLogger;
-import cm.android.log.timber.FileTree;
 import cm.android.log.timber.Level;
 import timber.log.Timber;
 
@@ -14,8 +14,8 @@ public class LogManager {
         Iterator<Timber.Tree> it = trees.iterator();
         while (it.hasNext()) {
             Timber.Tree tree = it.next();
-            if (tree instanceof FileTree) {
-                ((FileTree) tree).close();
+            if (tree instanceof Closeable) {
+                Util.closeQuietly((Closeable) tree);
             }
         }
         Timber.uprootAll();

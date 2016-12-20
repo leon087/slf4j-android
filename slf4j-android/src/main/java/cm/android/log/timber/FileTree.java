@@ -1,5 +1,6 @@
 package cm.android.log.timber;
 
+import java.io.Closeable;
 import java.io.File;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -9,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 import cm.android.log.FileHandler;
 import cm.android.log.Util;
 
-public class FileTree extends AbstractTree {
+public class FileTree extends AbstractTree implements Closeable {
     private FileHandler handler;
     private ScheduledExecutorService single;
     private ScheduledFuture closeFuture;
@@ -21,20 +22,20 @@ public class FileTree extends AbstractTree {
         single = Executors.newSingleThreadScheduledExecutor();
     }
 
+    @Override
     public void close() {
         synchronized (lock) {
             if (handler == null) {
                 return;
             }
 
+            handler.close();
+            single.shutdownNow();
             try {
                 single.awaitTermination(1000, TimeUnit.MILLISECONDS);
             } catch (InterruptedException e) {
                 Util.addError("close:awaitTermination", e);
             }
-
-            handler.close();
-            single.shutdownNow();
 
             single = null;
             handler = null;
@@ -47,8 +48,9 @@ public class FileTree extends AbstractTree {
     protected void log(int priority, String tag, String message, final Throwable t) {
         Level level = Level.convert(priority);
 
-        message = Formatter.formatTag(tag) + " - " + message;
-        final String msg = Formatter.format(level.toString(), message);
+        String levelStr = Util.rightPad(level.toString(), 5, " ");
+        message = Formatter.formatTag(tag, Formatter.CALL_STACK_INDEX) + " - " + message;
+        final String msg = Formatter.format(levelStr, message);
         writeLog(msg);
     }
 
@@ -103,7 +105,6 @@ public class FileTree extends AbstractTree {
                     if (handler == null) {
                         return;
                     }
-                    android.util.Log.e("hhhh", "hhhh timeout");
 
                     handler.close();
                     closeFuture = null;

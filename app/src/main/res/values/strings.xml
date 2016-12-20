@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_label">slf4j-timber-sample</string>
+    <string name="app_label">slf4j-android-sample</string>
 
 </resources>

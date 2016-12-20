@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.database.Cursor;
+import android.text.TextUtils;
 
 import java.io.Closeable;
 import java.io.File;
@@ -78,5 +79,36 @@ public class Util {
     public static void addError(String msg, Throwable t) {
         android.util.Log.e("ggg", "addError:msg = " + msg);
         t.printStackTrace();
+    }
+
+    public static String rightPad(final String str, final int size, String padStr) {
+        if (str == null) {
+            return null;
+        }
+        if (TextUtils.isEmpty(padStr)) {
+            padStr = " ";
+        }
+        final int padLen = padStr.length();
+        final int strLen = str.length();
+        final int pads = size - strLen;
+        if (pads <= 0) {
+            return str; // returns original String when possible
+        }
+        // if (padLen == 1 && pads <= PAD_LIMIT) {
+        // return rightPad(str, size, padStr.charAt(0));
+        // }
+
+        if (pads == padLen) {
+            return str.concat(padStr);
+        } else if (pads < padLen) {
+            return str.concat(padStr.substring(0, pads));
+        } else {
+            final char[] padding = new char[pads];
+            final char[] padChars = padStr.toCharArray();
+            for (int i = 0; i < pads; i++) {
+                padding[i] = padChars[i % padLen];
+            }
+            return str.concat(new String(padding));
+        }
     }
 }

@@ -54,6 +54,10 @@ public class StaticMDCBinder {
         return new NOPMDCAdapter();
     }
 
+    public static final StaticMDCBinder getSingleton() {
+        return SINGLETON;
+    }
+
     public String getMDCAdapterClassStr() {
         return NOPMDCAdapter.class.getName();
     }
