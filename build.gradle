@@ -1,13 +1,6 @@
 buildscript {
     repositories {
         jcenter()
-        maven {
-            url CM_RELEASE_REPOSITORY_URL
-            credentials {
-                username CM_NEXUS_USERNAME
-                password CM_NEXUS_PASSWORD
-            }
-        }
         maven { url uri(new File(rootDir, 'local_repo')) }
         mavenLocal()
     }
@@ -18,7 +11,7 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.3'
-        classpath "ggg.android:cm.android.gradle:$cmGradleVersion"
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
     }
 }
 
@@ -35,13 +28,6 @@ allprojects {
 
     repositories {
         jcenter()
-        maven {
-            url CM_RELEASE_REPOSITORY_URL
-            credentials {
-                username CM_NEXUS_USERNAME
-                password CM_NEXUS_PASSWORD
-            }
-        }
 
         flatDir {
             dirs "$rootDir/local_repo"
@@ -54,25 +40,7 @@ task wrapper(type: Wrapper) { gradleVersion = '2.14.1' }
 ext {
     //SDK
     minSdkVersion = 16
-    targetSdkVersion = 22//6.0动态权限适配
+    targetSdkVersion = 22
     compileSdkVersion = 23
     buildToolsVersion = "25.0.2"
-
-    //checkstyle
-    checkstyleExclude = []
-
-    findbugsDependsOn = 'assembleDebug'
-    findbugsExclude = []
-
-    // jacoco config
-    jacocoDependsOn = 'testDebugUnitTest'
-    jacocoVersion = '0.7.7.201606060606'
-    ignoredByJacoco = [
-            'app',
-            'slf4j-timber',
-    ]
-    moduleClassDirs = []
-    moduleJacocoExec = []
-    moduleExcludes = []
 }
-apply plugin: 'cm.android.gradle.script'

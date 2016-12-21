@@ -10,7 +10,20 @@
 
 使用
 -----
-添加依赖：
+1. Add the JitPack repository to your build file
+```groovy
+allprojects {
+	repositories {
+		maven { url 'https://www.jitpack.io' }
+	}
+}
+```
+2. Add the dependency
+```groovy
+    compile 'com.github.leon087:slf4j-android:+'
+```
+
+添加其他依赖：
 ```groovy
 compile "org.slf4j:slf4j-api:1.7.22"
 compile 'com.jakewharton.timber:timber:4.4.0'
