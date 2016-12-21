@@ -10,7 +10,7 @@
 
 使用
 -----
-1. Add the JitPack repository to your build file
+1. Add the JitPack repository to your build file  
 ```groovy
 allprojects {
 	repositories {
@@ -18,18 +18,18 @@ allprojects {
 	}
 }
 ```
-2. Add the dependency
+2. 添加依赖  
 ```groovy
     compile 'com.github.leon087:slf4j-android:+'
 ```
 
-添加其他依赖：
+3. 添加其他依赖  
 ```groovy
 compile "org.slf4j:slf4j-api:1.7.22"
 compile 'com.jakewharton.timber:timber:4.4.0'
 ```
 
-初始化与关闭：
+初始化与关闭：  
 ```java
 public class App {
     /**
@@ -53,7 +53,7 @@ public class App {
 }
 ```
 
-添加日志：
+添加日志：  
 ```java
 public class Demo {
     private static final Logger logger = LoggerFactory.getLogger("hhhh");
