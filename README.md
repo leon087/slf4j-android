@@ -15,18 +15,19 @@
 allprojects {
 	repositories {
 		maven { url 'https://www.jitpack.io' }
+		jcenter()
 	}
 }
 ```
 2. 添加依赖  
 ```groovy
-    compile 'com.github.leon087:slf4j-android:+'
+    compile 'ggg.android:slf4j-android:{latest version}'
 ```
 
 3. 添加其他依赖  
 ```groovy
-compile "org.slf4j:slf4j-api:1.7.22"
-compile 'com.jakewharton.timber:timber:4.4.0'
+compile "org.slf4j:slf4j-api:{latest version}"
+compile 'com.jakewharton.timber:timber:{latest version}'
 ```
 
 初始化与关闭：  

@@ -11,6 +11,7 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.3'
+        //jitpack
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
     }
 }
@@ -27,6 +28,12 @@ allprojects {
     }
 
     repositories {
+        maven {
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file('local.properties').newDataInputStream())
+            url properties.getProperty("sdk.dir") + "/extras/android/m2repository"
+        }
+
         jcenter()
 
         flatDir {

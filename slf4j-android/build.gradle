@@ -3,9 +3,6 @@ tasks.withType(JavaCompile) { options.encoding = "UTF-8" }
 apply plugin: 'com.android.library'
 apply from: "$rootDir/ext-android.gradle"
 
-apply plugin: 'com.github.dcendents.android-maven'
-group = 'com.github.leon087'
-
 android {
     defaultConfig {
     }
@@ -17,3 +14,8 @@ dependencies {
     compile "org.slf4j:slf4j-api:1.7.22"
     compile 'com.jakewharton.timber:timber:4.4.0'
 }
+
+//jitpack
+apply plugin: 'com.github.dcendents.android-maven'
+//group = 'com.github.xxx'
+group = GROUP
