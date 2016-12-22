@@ -21,7 +21,7 @@ allprojects {
 ```
 2. 添加依赖  
 ```groovy
-    compile 'ggg.android:slf4j-android:{latest version}'
+compile 'com.github.leon087:slf4j-android:{latest version}'
 ```
 
 3. 添加其他依赖  

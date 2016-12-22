@@ -16,6 +16,5 @@ dependencies {
 }
 
 //jitpack
-apply plugin: 'com.github.dcendents.android-maven'
+//apply plugin: 'com.github.dcendents.android-maven'
 //group = 'com.github.xxx'
-group = GROUP
