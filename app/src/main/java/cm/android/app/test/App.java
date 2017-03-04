@@ -15,7 +15,7 @@ public class App {
      */
     public void init() {
         File dir = Environment.getExternalStoragePublicDirectory("log");
-        FileTree fileTree = new FileTree(dir);
+        FileTree fileTree = new FileTree(dir, "process");
         LogcatTree logcatTree = new LogcatTree();
 
         LogManager.setLevel(Level.ALL);

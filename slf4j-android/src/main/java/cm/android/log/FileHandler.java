@@ -17,10 +17,12 @@ public class FileHandler implements Closeable {
     private File logFile;
     private File dir;
     private boolean append;
+    private String tag;
 
-    public FileHandler(File dir) {
+    public FileHandler(File dir, String tag) {
         this.dir = dir;
         this.append = true;
+        this.tag = tag;
     }
 
     private void initializeWriter(String fileName) throws FileNotFoundException {
@@ -43,7 +45,12 @@ public class FileHandler implements Closeable {
             close();
         }
         try {
-            initializeWriter(format + ".log");
+            initializeWriter(new StringBuilder()
+                    .append(format)
+                    .append("_")
+                    .append(tag)
+                    .append(".log")
+                    .toString());
             return true;
         } catch (FileNotFoundException e) {
             return false;

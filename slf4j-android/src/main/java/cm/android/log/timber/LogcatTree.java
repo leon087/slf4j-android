@@ -2,7 +2,7 @@ package cm.android.log.timber;
 
 import android.util.Log;
 
-public class LogcatTree extends AbstractTree {
+public class LogcatTree extends TreeWrapper {
     private static final int MAX_LOG_LENGTH = 4000;
 
     @Override

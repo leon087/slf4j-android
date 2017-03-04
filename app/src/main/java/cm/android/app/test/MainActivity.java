@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         File dir = Environment.getExternalStoragePublicDirectory(this.getPackageName());
-        FileTree fileTree = new FileTree(dir);
+        FileTree fileTree = new FileTree(dir, getPackageName());
         LogcatTree logcatTree = new LogcatTree();
 
         boolean flag = new Random().nextBoolean();
@@ -32,8 +32,10 @@ public class MainActivity extends Activity {
         Level level = Level.ALL;
         if (flag) {
             level = Level.TRACE;
+            logcatTree.setLevel(Level.ALL);
         } else {
-            level = Level.DEBUG;
+            level = Level.INFO;
+            logcatTree.setLevel(Level.ERROR);
         }
 
         LogManager.setLevel(level);

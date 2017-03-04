@@ -10,6 +10,7 @@
 
 使用
 -----
+
 1. Add the JitPack repository to your build file  
 ```groovy
 allprojects {
@@ -19,18 +20,20 @@ allprojects {
 	}
 }
 ```
+
 2. 添加依赖  
 ```groovy
-compile 'com.github.leon087:slf4j-android:{latest version}'
+//jitpack默认group为:com.github.{username}
+compile '{group}:slf4j-android:{latest_version}'
 ```
 
 3. 添加其他依赖  
 ```groovy
-compile "org.slf4j:slf4j-api:{latest version}"
-compile 'com.jakewharton.timber:timber:{latest version}'
+compile "org.slf4j:slf4j-api:{latest_version}"
+compile 'com.jakewharton.timber:timber:{latest_version}'
 ```
 
-初始化与关闭：  
+4. 初始化与关闭：  
 ```java
 public class App {
     /**
@@ -54,7 +57,7 @@ public class App {
 }
 ```
 
-添加日志：  
+5. 添加日志：  
 ```java
 public class Demo {
     private static final Logger logger = LoggerFactory.getLogger("hhhh");
@@ -67,6 +70,12 @@ public class Demo {
     }
 }
 ```
+
+
+TODO
+---
+1. 日志自动gz压缩
+2. 日志文件超过一定大小or超过一定时间or磁盘空间不足，自动清理
 
 License
 ---

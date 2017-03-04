@@ -2,7 +2,7 @@ package cm.android.log.timber;
 
 import timber.log.Timber;
 
-public abstract class AbstractTree extends Timber.Tree {
+public abstract class TreeWrapper extends Timber.Tree {
     protected Level level = Level.ALL;
 
     public void setLevel(Level level) {

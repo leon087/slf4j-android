@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 import cm.android.log.FileHandler;
 import cm.android.log.Util;
 
-public class FileTree extends AbstractTree implements Closeable {
+public class FileTree extends TreeWrapper implements Closeable {
     private FileHandler handler;
     private ScheduledExecutorService single;
     private ScheduledFuture closeFuture;
@@ -18,7 +18,11 @@ public class FileTree extends AbstractTree implements Closeable {
     private volatile Object lock = new Object();
 
     public FileTree(File dir) {
-        handler = new FileHandler(dir);
+        this(dir, "");
+    }
+
+    public FileTree(File dir, String fileTag) {
+        handler = new FileHandler(dir, fileTag);
         single = Executors.newSingleThreadScheduledExecutor();
     }
 
@@ -93,7 +97,6 @@ public class FileTree extends AbstractTree implements Closeable {
         }, 10, TimeUnit.SECONDS);
     }
 
-    //TODO ggg 超时n秒未写日志则close，每次写日志时重置n
     private void scheduleClose() {
         if (closeFuture != null) {
             closeFuture.cancel(true);
