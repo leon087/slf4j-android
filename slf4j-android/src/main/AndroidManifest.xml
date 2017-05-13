@@ -1,5 +1,4 @@
-<manifest
-        package="cm.android.slf4j.timber">
+<manifest package="cm.android.log">
     <application/>
 
 </manifest>

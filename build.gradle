@@ -1,16 +1,26 @@
 buildscript {
     repositories {
+        mavenCentral()
+        mavenLocal()
         jcenter()
         maven { url uri(new File(rootDir, 'local_repo')) }
-        mavenLocal()
+
+        maven {
+            url CM_RELEASE_REPOSITORY_URL
+            credentials {
+                username CM_NEXUS_USERNAME
+                password CM_NEXUS_PASSWORD
+            }
+        }
     }
 
     ext {
-        cmGradleVersion = "1.52"
+        cmGradleVersion = "1.60"
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:2.3.2'
+        classpath "ggg.android:gradle-plugin:$cmGradleVersion"
         //jitpack
 //        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
     }
@@ -35,6 +45,13 @@ allprojects {
         }
 
         jcenter()
+        maven {
+            url CM_RELEASE_REPOSITORY_URL
+            credentials {
+                username CM_NEXUS_USERNAME
+                password CM_NEXUS_PASSWORD
+            }
+        }
 
         flatDir {
             dirs "$rootDir/local_repo"
@@ -42,7 +59,7 @@ allprojects {
         mavenLocal()
     }
 }
-task wrapper(type: Wrapper) { gradleVersion = '2.14.1' }
+//task wrapper(type: Wrapper) { gradleVersion = '3.5' }
 
 ext {
     //SDK
@@ -51,3 +68,5 @@ ext {
     compileSdkVersion = 23
     buildToolsVersion = "25.0.2"
 }
+
+apply plugin: 'cm.android.gradle.publish'

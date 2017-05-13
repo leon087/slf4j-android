@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply from: "$rootDir/ext-android.gradle"
 
+apply plugin: 'cm.android.gradle.proguard'
+
 android {
     lintOptions {
         abortOnError false

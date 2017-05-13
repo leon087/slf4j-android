@@ -10,6 +10,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
+import cm.android.log.policy.PolicyManager;
+
 public class FileHandler implements Closeable {
     private OutputStream os;
     private Writer writer;
@@ -18,11 +20,14 @@ public class FileHandler implements Closeable {
     private File dir;
     private boolean append;
     private String tag;
+    private String fileName;
 
     public FileHandler(File dir, String tag) {
         this.dir = dir;
         this.append = true;
         this.tag = tag;
+
+        PolicyManager.getInstance().attach(dir.getAbsolutePath());
     }
 
     private void initializeWriter(String fileName) throws FileNotFoundException {
@@ -34,23 +39,24 @@ public class FileHandler implements Closeable {
 
             this.writerInitialized = true;
             this.writer = new OutputStreamWriter(this.os);
+
+            PolicyManager.getInstance().setFile(logFile.getAbsolutePath());
         }
     }
 
     private boolean checkWriter() {
-        String format = Util.formatDate("yyyy-MM-dd", System.currentTimeMillis());
-        if (logFile != null && !logFile.getName().contains(format)) {
+        String format = Util.formatDate(LogConstants.DATE_FORMAT, System.currentTimeMillis());
+        fileName = String.format("%s" + LogConstants.SPLIT_UNDERLINE + "[%s].log", format, tag);
+
+        if (logFile != null && !logFile.getName().contains(fileName)) {
 //            android.util.Log.e("hhhh", "hhhh format = " + format);
 //            android.util.Log.e("hhhh", "hhhh logFile = " + logFile.getName());
             close();
         }
+
         try {
-            initializeWriter(new StringBuilder()
-                    .append(format)
-                    .append("_")
-                    .append(tag)
-                    .append(".log")
-                    .toString());
+            initializeWriter(fileName);
+            checkFileAndDisk();
             return true;
         } catch (FileNotFoundException e) {
             return false;
@@ -63,6 +69,7 @@ public class FileHandler implements Closeable {
             flush();
             try {
                 this.writer.close();
+//                engine.stop();
                 android.util.Log.e("hhhhh", "hhhhh:close");
             } catch (IOException e) {
                 Util.addError("close", e);
@@ -105,5 +112,16 @@ public class FileHandler implements Closeable {
         if (immediateFlush) {
             flush();
         }
+    }
+
+    public File getDir() {
+        return dir;
+    }
+
+    /**
+     * 检测
+     */
+    private void checkFileAndDisk() {
+        PolicyManager.getInstance().checkFileAppend();
     }
 }

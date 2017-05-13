@@ -15,7 +15,7 @@ public class Formatter {
     }
 
     //TODO ggg 混淆为7，不混淆为10
-    public static final int CALL_STACK_INDEX = Formatter.class.getSimpleName().contains("Formatter") ? 10 : 7;
+    public static final int CALL_STACK_INDEX = Formatter.class.getCanonicalName().contains("cm.android.log.timber.Formatter") ? 10 : 7;
 
     private static final Pattern ANONYMOUS_CLASS = Pattern.compile("(\\$\\d+)+$");
 

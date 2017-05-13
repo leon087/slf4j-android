@@ -5,8 +5,9 @@
 - 为timber添加slf4j框架支持
 - 支持FileTree、LogcatTree
 - 支持setLevel方式自定义日志权限控制
-- FileTree按天进行日志存储，输出文件名：yyyy-MM-dd.log
+- FileTree按天进行日志存储，输出文件名：yyyy-MM-dd_[$TAG].log
 - 日志输入格式："%date %level5 [%logger:%thread:%method:%line] - msg"
+- 每天日志自动压缩成tar.gz，并根据磁盘空间与日志留存时间自动清理
 
 使用
 -----
@@ -70,12 +71,17 @@ public class Demo {
     }
 }
 ```
+6. 混淆：
 
+在项目中使用slf4j-android日志库时，需要在混淆脚本中加入以下配置：
+```
+-dontwarn org.apache.commons.compress.**
+-keep class org.slf4j.** { *; }
+```
 
 TODO
 ---
-1. 日志自动gz压缩
-2. 日志文件超过一定大小or超过一定时间or磁盘空间不足，自动清理
+
 
 License
 ---
