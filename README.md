@@ -28,13 +28,7 @@ allprojects {
 compile '{group}:slf4j-android:{latest_version}'
 ```
 
-3. 添加其他依赖  
-```groovy
-compile "org.slf4j:slf4j-api:{latest_version}"
-compile 'com.jakewharton.timber:timber:{latest_version}'
-```
-
-4. 初始化与关闭：  
+3. 初始化与关闭：  
 ```java
 public class App {
     /**
@@ -58,7 +52,7 @@ public class App {
 }
 ```
 
-5. 添加日志：  
+4. 添加日志：  
 ```java
 public class Demo {
     private static final Logger logger = LoggerFactory.getLogger("hhhh");
@@ -71,7 +65,7 @@ public class Demo {
     }
 }
 ```
-6. 混淆：
+5. 混淆：
 
 在项目中使用slf4j-android日志库时，需要在混淆脚本中加入以下配置：
 ```
